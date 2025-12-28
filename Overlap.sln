@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Overlap", "Overlap.vcxproj", "{9573A49F-7398-49C2-87D9-E389B06569C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73} = {9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OverlapLib", "OverlapLib\OverlapLib.vcxproj", "{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Debug|Win32.ActiveCfg = Debug|x64
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Debug|Win32.Build.0 = Debug|x64
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Debug|x64.ActiveCfg = Debug|x64
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Debug|x64.Build.0 = Debug|x64
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Release|Win32.ActiveCfg = Release|Win32
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Release|Win32.Build.0 = Release|Win32
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Release|x64.ActiveCfg = Release|x64
+		{9573A49F-7398-49C2-87D9-E389B06569C8}.Release|x64.Build.0 = Release|x64
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Debug|Win32.ActiveCfg = Debug|x64
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Debug|Win32.Build.0 = Debug|x64
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Debug|x64.ActiveCfg = Debug|x64
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Debug|x64.Build.0 = Debug|x64
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Release|Win32.ActiveCfg = Release|Win32
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Release|Win32.Build.0 = Release|Win32
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Release|x64.ActiveCfg = Release|x64
+		{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1758330F-1D77-4E82-B930-FA040821524A}
+	EndGlobalSection
+EndGlobal

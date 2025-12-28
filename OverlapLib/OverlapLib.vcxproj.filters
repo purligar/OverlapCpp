@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="buildHist.cpp" />
+    <ClCompile Include="histogram.cpp" />
+    <ClCompile Include="OTAveraging.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="buildHist.h" />
+    <ClInclude Include="histogram.h" />
+    <ClInclude Include="OTAveraging.h" />
+  </ItemGroup>
+</Project>
