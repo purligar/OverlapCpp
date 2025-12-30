@@ -42,3 +42,4 @@ out/*
 interlaced/
 x64/
 sample_images/
+/log/logging.txt

@@ -44,7 +44,7 @@ static void help()
     std::string msg;
     msg += "\nThis program builds the average of frames\n";
     msg += "Usage:\n";
-    msg += "./OverlapCpp [image_path_name -- default is ../samples/ ] mintreshold maxtreshold\n\n";
+    msg += "./Overlap [image_path_name -- default is ../sample_images/ ] mintreshold maxtreshold\n\n";
     msg += "q : quit\n";
 
     std::cout << msg;
@@ -64,7 +64,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     const String keys =
         "{help h usage ? |              | print this message   }"
-        "{input         |               | input file or path or cameradevicenum   }"
+        "{input         |  ./sample_images  | input file or path or cameradevicenum   }"
         "{minth          | 40           | all pixels below threshold will be zeroed               }"
         "{maxth          | 4093         | all pixel over maxth will be zeroed         }"
         "{cam            |              | supported: opencv, basler   }"
@@ -108,7 +108,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     COverlap ov(outpathfolder.string(), fResizeFactor, minth, maxth);
     if (parser.has("verbose"))
-        ov.m_bIsVerbose = true;
+        ov.m_iDebugLevel = true;
     if (parser.has("window"))
         ov.m_bShowImages = true;
 
@@ -154,7 +154,7 @@ int _tmain(int argc, _TCHAR* argv[])
                     //SVS-Vistek 12-bit Mode scaled to 16 Bit
                     //orig /= 16;
 
-                    if (ov.AddImage(grey) != 0)
+                    if (ov.ProcessImage(grey) != 0)
                         break;
                 } while (!ov.m_bStopAquisition);
 
@@ -203,7 +203,7 @@ int _tmain(int argc, _TCHAR* argv[])
                 std::cout << "file_pos:" << file_pos << "; image:" << fn << "\n";
                 //std::cout <<fn << "\n";
 
-                ov.AddImage(orig);
+                ov.ProcessImage(orig);
             }
 
             std::cout << "press key to proceed...q or ESC for exit, n for next file, N for previous file" << "\n";
