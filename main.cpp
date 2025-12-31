@@ -26,6 +26,7 @@
 #endif
 
 #include "OverlapLib/Overlap.h"
+#include "OverlapLib/CInterlacedParams.h"
 
 using namespace std;
 
@@ -65,12 +66,7 @@ int _tmain(int argc, _TCHAR* argv[])
     const String keys =
         "{help h usage ? |              | print this message   }"
         "{input         |  ./sample_images  | input file or path or cameradevicenum   }"
-        "{minth          | 40           | all pixels below threshold will be zeroed               }"
-        "{maxth          | 4093         | all pixel over maxth will be zeroed         }"
         "{cam            |              | supported: opencv, basler   }"
-        "{verbose v     |               | print verbose out   }"
-        "{window w     |               | show processed images in window   }"
-        "{ResizeFactor r | 0.2       | resize factor for opencv destroyAllWindows }"
         ;
 
     cv::CommandLineParser parser(argc, argv, keys);
@@ -95,22 +91,26 @@ int _tmain(int argc, _TCHAR* argv[])
         return -2;
     }
 
-    double minth = parser.get<double>("minth");
-    double maxth = parser.get<double>("maxth");
-    cout << "minth: " << minth << " maxth: " << maxth << "\n";
-    const double fResizeFactor = parser.get<double>("ResizeFactor");
-
 	fs::path outpathfolder = fs::path(sInputPath);
 	outpathfolder /= "out";
 	// create output folder
 	fs::create_directories(outpathfolder);
 	cout << "output folder: " << outpathfolder.string() << "\n";
 
-    COverlap ov(outpathfolder.string(), fResizeFactor, minth, maxth);
-    if (parser.has("verbose"))
-        ov.m_iDebugLevel = true;
-    if (parser.has("window"))
-        ov.m_bShowImages = true;
+    // prepare params json in output folder
+    fs::path params_json_path = outpathfolder;
+    params_json_path /= "interlaced_params.json";
+    CInterlacedParams interlaced_params;
+    if (fs::exists(params_json_path)) {
+        interlaced_params = CInterlacedParams::LoadFromJson(params_json_path.string());
+        cout << "Loaded interlaced params from: " << params_json_path.string() << "\n";
+    }
+    else {
+        // save defaults
+        interlaced_params.SaveToJson(params_json_path.string());
+        cout << "Saved default interlaced params to: " << params_json_path.string() << "\n";
+    }
+    COverlap ov(outpathfolder.string(), interlaced_params);
 
     if (parser.has("cam"))
     { // images from camera
@@ -179,6 +179,7 @@ int _tmain(int argc, _TCHAR* argv[])
         Mat orig;
 
         string sFiletext;
+
         while (running)
         {
             auto fn = filelist[file_pos];
@@ -201,9 +202,19 @@ int _tmain(int argc, _TCHAR* argv[])
             else
             {
                 std::cout << "file_pos:" << file_pos << "; image:" << fn << "\n";
-                //std::cout <<fn << "\n";
-
-                ov.ProcessImage(orig);
+                // build base filename
+                string base_filename = fs::path(fn).stem().string();
+                // skip if output folder for this image already exists
+                fs::path image_outdir = fs::path(ov.m_outpathname) / base_filename;
+                if (fs::exists(image_outdir)) {
+                    cout << "Output directory exists, skipping: " << image_outdir.string() << "\n";
+                } else {
+                    // create output dir
+                    fs::create_directories(image_outdir);
+                    // call SplitBlobs
+                    auto results = ov.SplitBlobs(orig, base_filename);
+                    cout << "SplitBlobs returned " << results.size() << " entries for " << base_filename << "\n";
+                }
             }
 
             std::cout << "press key to proceed...q or ESC for exit, n for next file, N for previous file" << "\n";
@@ -235,9 +246,7 @@ int _tmain(int argc, _TCHAR* argv[])
             if (file_pos < 0)
                 file_pos = filelist.size() - 1;
         }
-        /*cout << "press key to proceed..." << "\n";
-        char key = (char)waitKey(0);*/
     }
-	
+
     return ret;
 }

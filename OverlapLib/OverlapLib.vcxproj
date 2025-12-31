@@ -20,13 +20,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="buildHist.cpp" />
+    <ClCompile Include="CInterlacedParams.cpp" />
+    <ClCompile Include="CountLines.cpp" />
     <ClCompile Include="histogram.cpp" />
+    <ClCompile Include="InterlacedGetOffset.cpp" />
     <ClCompile Include="Overlap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buildHist.h" />
+    <ClInclude Include="CInterlacedParams.h" />
+    <ClInclude Include="CountLines.h" />
     <ClInclude Include="histogram.h" />
+    <ClInclude Include="InterlacedGetOffset.h" />
     <ClInclude Include="Overlap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\python\overlap\count_lines.py" />
+    <None Include="..\..\python\overlap\interlaced_get_offset.py" />
+    <None Include="..\..\python\overlap\interlaced_params.py" />
+    <None Include="..\..\python\overlap\interlaced_split_blobs.py" />
+    <None Include="..\..\python\overlap\layer_params.py" />
+    <None Include="..\..\python\overlap\parse_files.py" />
+    <None Include="..\..\python\overlap\read_results.py" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9A19F6EA-B49B-475B-BD7D-A638A3EF8E73}</ProjectGuid>

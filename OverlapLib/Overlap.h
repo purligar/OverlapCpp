@@ -8,6 +8,9 @@
 
 #include <opencv2/core.hpp> //Any OPENCV3 code
 
+#include "CInterlacedParams.h"
+#include "InterlacedGetOffset.h"
+
 using namespace cv;
 
 /// Global Variables
@@ -19,7 +22,7 @@ const double cfResizeFactor = 0.25; // for OpenCV windows
 class COverlap
 {
 public: 
-	// reporting
+    // reporting
     int        m_iDebugLevel;
     std::string  m_outpathname;
     std::string  m_outfilesuffix;
@@ -32,8 +35,11 @@ public:
     bool    m_bStopAquisition; // to stop adding new images to image stack
 
     //visualization
-    double  m_bShowImages;
+    bool    m_bShowImages;
     double  m_fResizeFactor;
+
+    // interlaced processing params (moved here from function arg)
+    CInterlacedParams m_params;
 
 private:
     //Mat1f M1f, stddevimage;
@@ -42,14 +48,18 @@ private:
     std::ofstream   m_of;
 
 public:
-    COverlap(const std::string & outpathname, const double fResizeFactor = cfResizeFactor, const double& minth = cuiminth, const double& maxth = cuimaxth);
+    COverlap(const std::string & outpathname, const CInterlacedParams& params, const double fResizeFactor = cfResizeFactor);
     ~COverlap();
     void Reset();
-    /*!
+    /*! 
     * \brief       process new image and build 16bit average , max, mean images log file in outpathfolder
     * \returns     0 if no error
     */
     int ProcessImage(const cv::Mat& src);
+
+    // Split blobs (ported from Python interlaced_split_blobs)
+    // returns vector of OffsetResult containing offsets and metadata for each crop
+    std::vector<OffsetResult> SplitBlobs(const cv::Mat& image, const std::string& base_filename);
 
 private:
    

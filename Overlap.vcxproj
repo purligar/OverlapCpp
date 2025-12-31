@@ -213,6 +213,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\python\overlap\parse_files.py" />
+    <None Include="..\python\overlap\read_results.py" />
     <None Include="doCopy.bat" />
     <None Include="doPostBuildStep.bat" />
     <None Include="log4cplusconfig.ini" />
